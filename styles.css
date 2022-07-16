@@ -1,0 +1,175 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 62.5%;
+}
+
+.startScreen {
+  position: absolute;
+  background-color: rgba(119, 8, 82, 0.952);
+  color: white;
+  z-index: 1;
+  margin-top: 25vh;
+  margin-left: 25vw;
+  /* box-shadow: 0 0 20px 0px rgba(0,0,0,0.1); */
+  font-size: 4rem;
+  width: 50vw;
+  height: 50vh;
+  cursor: pointer;
+  border-radius: 2.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreCard {
+  position: absolute;
+  background-color: crimson;
+  top: 7%;
+  left: 5%;
+  font-size: 2rem;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 0.5rem;
+}
+
+.highScoreCard {
+  position: absolute;
+  background-color: crimson;
+  right: 7%;
+  top: 5%;
+  width: max(max-content, 10vw);
+  /* width: max-content; */
+  font-size: 2rem;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 0.5rem;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f7ecde;
+  display: flex;
+  justify-content: center;
+}
+
+.road {
+  width: 25%;
+  /* width: max(50%, 30vw); */
+  height: 100%;
+  /* background-color: blue; */
+  /* border: 0.1rem solid black; */
+  display: flex;
+  position: relative;
+}
+
+.path {
+  background-color: yellow;
+  width: 50%;
+  /* border: 1rem solid orange; */
+}
+
+.left-left {
+  border-right: 0.3rem solid #f7ecde;
+}
+.left-right {
+  border-left: 0.3rem solid #f7ecde;
+}
+.right-left {
+  border-right: 0.3rem solid #f7ecde;
+}
+.right-right {
+  border-left: 0.3rem solid #f7ecde;
+}
+
+.left {
+  border-right: 0.4rem solid #e9dac1;
+}
+.right {
+  border-left: 0.4rem solid #e9dac1;
+}
+
+.car {
+  position: absolute;
+  height: 5rem;
+  width: 3rem;
+  bottom: 10%;
+  left: 25%;
+  transform: translate(-50%, +50%);
+  background-color: #18978f;
+  border-radius: 0.5rem;
+  /* box-shadow: 0.5rem 0.5rem blue; */
+  box-shadow: 1px 1px 10px 1px rgba(0, 47, 255, 1);
+  /* animation: clickAnimation 1s ease-in-out 1s forwards; */
+  /* animation-name: clickAnimation; */
+  /* animation-duration: 4s; */
+}
+
+.right-car {
+  left: 75%;
+}
+
+/* .obstacle {
+    position: absolute;
+    background-color: rgb(254, 0, 0);
+    height: 4rem;
+    width: 4rem;
+    left: 25%;
+    transform: translate(-50%, +50%);
+    border-radius: 50rem;
+} */
+.hide {
+  display: none;
+}
+
+@keyframes toLeft {
+  0% {
+    left: 25%;
+    transform: translate(-50%, +50%) rotateZ(0);
+  }
+  50% {
+    transform: translate(-50%, +50%) rotateZ(45deg);
+  }
+  100% {
+    transform: translate(-50%, +50%) rotateZ(0);
+    left: 75%;
+  }
+}
+
+@keyframes toRight {
+  0% {
+    left: 75%;
+    transform: translate(-50%, +50%) rotateZ(0);
+  }
+  50% {
+    transform: translate(-50%, +50%) rotateZ(-45deg);
+  }
+  100% {
+    transform: translate(-50%, +50%) rotateZ(0);
+    left: 25%;
+  }
+}
+
+.obstacle {
+  width: 50px;
+  height: 70px;
+  background-color: rgb(255, 0, 0);
+  position: absolute;
+  bottom: 120px;
+}
+
+.circle {
+  border-radius: 2rem;
+}
+
+.square {
+  border-radius: 0.2rem;
+}

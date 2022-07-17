@@ -18,6 +18,17 @@ let rect = left.getBoundingClientRect();
 // console.log(rect.top, rect.right, rect.bottom, rect.left);
 let width = rect.right - rect.left;
 
+document.addEventListener("click", startGame);
+
+function startGame() {
+  startScreen.classList.add("hide");
+  player.start = true;
+  player.score = 0;
+  addObstacle();
+  gamePlay();
+  document.removeEventListener("click", startGame);
+}
+
 document.addEventListener("keydown", function (event) {
   //   console.log(event.key);
   if (event.key == "ArrowLeft" && leftPos == 0) {
@@ -40,11 +51,23 @@ document.addEventListener("keydown", function (event) {
 function generateObstacle() {
   let obstacle = document.createElement("div");
   obstacle.setAttribute("class", "obstacle");
+  let img = document.createElement("img");
   obstacle.style.top = 0 + "px";
   let fate = Math.random() / 0.25; // select circle || square , left || right
   fate = Math.ceil(fate);
-  if (fate < 3) obstacle.classList.add("circle");
-  else obstacle.classList.add("square");
+  if (fate < 3) {
+    obstacle.classList.add("circle");
+    img.src = "./coin.png";
+    img.style.height = "70px";
+    img.style.width = "70px";
+    obstacle.appendChild(img);
+  } else {
+    obstacle.classList.add("square");
+    img.src = "./obstacle.png";
+    img.style.height = "70px";
+    img.style.width = "70px";
+    obstacle.appendChild(img);
+  }
   if (fate % 2 == 0) obstacle.style.left = width / 6 + "px";
   else obstacle.style.left = (4 * width) / 6 + "px";
   return obstacle;
@@ -54,14 +77,6 @@ function addObstacle() {
   left.appendChild(generateObstacle());
   right.appendChild(generateObstacle());
 }
-
-document.addEventListener("click", function () {
-  startScreen.classList.add("hide");
-  player.start = true;
-  player.score = 0;
-  addObstacle();
-  gamePlay();
-});
 
 function isCollide(a, b) {
   let aRect = a.getBoundingClientRect();
@@ -81,14 +96,18 @@ function isInViewport(element) {
     rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
   );
 }
-
+// for experiment
 function restart() {
-  startScreen.classList.remove("hide");
   player.start = false;
-  let obstacles = document.querySelectorAll(".obstacle");
-  obstacles.forEach((obs) => {
-    obs.parentNode.removeChild(obs);
-  });
+  
+  setTimeout(function () {
+    startScreen.classList.remove("hide");
+    let obstacles = document.querySelectorAll(".obstacle");
+    obstacles.forEach((obs) => {
+      obs.parentNode.removeChild(obs);
+    });
+    document.addEventListener("click", startGame);
+  }, 2000);
 }
 
 function gamePlay() {
@@ -107,15 +126,22 @@ function gamePlay() {
       let rightCol = isCollide(rightCar, obstacle);
       let col = leftCol || rightCol;
       if (col && obstacle.classList.contains("square")) {
+        obstacle.classList.add("collisionSpin");
+        // setTimeout(restart, 500);
         restart();
       } else if (col && obstacle.classList.contains("circle")) {
         obstacle.parentNode.removeChild(obstacle);
       }
       if (!isInViewport(obstacle) && obstacle.classList.contains("square")) {
         obstacle.parentNode.removeChild(obstacle);
-      } else if (!isInViewport(obstacle) && obstacle.classList.contains("circle")) 
-      restart();
-        // player.start = false;
+      } else if (
+        !isInViewport(obstacle) &&
+        obstacle.classList.contains("circle")
+      ) {
+        obstacle.classList.add("collisionBlink");
+        restart();
+      }
+      // player.start = false;
     });
     window.requestAnimationFrame(gamePlay);
     if (player.score % sp == 0) {
@@ -127,4 +153,4 @@ function gamePlay() {
   }
 }
 
-// end game, restart, save HS to device, animation blast, see color scheme
+// save HS to device, animation blast, see color scheme

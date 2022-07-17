@@ -72,7 +72,7 @@ body {
 }
 
 .path {
-  background-color: yellow;
+  background-color: #f5cac3;
   width: 50%;
   /* border: 1rem solid orange; */
 }
@@ -99,18 +99,24 @@ body {
 
 .car {
   position: absolute;
-  height: 5rem;
+  height: 6rem;
   width: 3rem;
   bottom: 10%;
   left: 25%;
   transform: translate(-50%, +50%);
-  background-color: #18978f;
+  /* background-color: #18978f; */
+  background-color: transparent;
   border-radius: 0.5rem;
   /* box-shadow: 0.5rem 0.5rem blue; */
-  box-shadow: 1px 1px 10px 1px rgba(0, 47, 255, 1);
+  /* box-shadow: 1px 1px 10px 1px rgba(0, 47, 255, 1); */
   /* animation: clickAnimation 1s ease-in-out 1s forwards; */
   /* animation-name: clickAnimation; */
   /* animation-duration: 4s; */
+}
+
+.car img {
+  height: 6rem;
+  width: 3rem;
 }
 
 .right-car {
@@ -161,15 +167,62 @@ body {
 .obstacle {
   width: 50px;
   height: 70px;
-  background-color: rgb(255, 0, 0);
+  /* background-color: rgb(255, 0, 0); */
   position: absolute;
   bottom: 120px;
 }
 
 .circle {
   border-radius: 2rem;
+  animation: coinSpin 1s infinite;
 }
 
 .square {
   border-radius: 0.2rem;
+  /* -webkit-transition: -webkit-transform .3s linear; */
+  animation: rotate 1s linear infinite;
+}
+
+.collisionSpin {
+  animation: spin 2s linear forwards;
+}
+
+
+/* .square.rotate {
+  -webkit-transform: rotate(45deg);
+} */
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(2000deg);
+  }
+}
+
+@keyframes coinSpin {
+  50% {
+    transform: rotateY(180deg);
+  }
+}
+
+.collisionBlink {
+  animation: blink 0.5s;
+  animation-iteration-count: 4;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }

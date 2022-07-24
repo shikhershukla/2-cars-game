@@ -11,11 +11,10 @@ let currHighScore = document.querySelector(".currHighScore");
 
 let leftPos = 0; // 0 - left, 1 - right
 let rightPos = 1; // 0 - left, 1 - right
-let player = { start: false, score: 0, speed: 5 }; // speed -> obstacle movement speed in pixel
+let player = { start: false, score: 0, speed: 5, coinsCollected: 0 }; // speed -> obstacle movement speed in pixel
 let highScore = 0;
 let sp = 70;
 let rect = left.getBoundingClientRect();
-// console.log(rect.top, rect.right, rect.bottom, rect.left);
 let width = rect.right - rect.left;
 
 document.addEventListener("click", startGame);
@@ -23,14 +22,15 @@ document.addEventListener("click", startGame);
 function startGame() {
   startScreen.classList.add("hide");
   player.start = true;
+  player.coinsCollected = 0;
   player.score = 0;
   addObstacle();
+  gamePlay();
   gamePlay();
   document.removeEventListener("click", startGame);
 }
 
-document.addEventListener("keydown", function (event) {
-  //   console.log(event.key);
+function onKeyDown(event) {
   if (event.key == "ArrowLeft" && leftPos == 0) {
     leftCar.style.animation = "toLeft 0.2s ease-in-out 0s forwards";
     leftPos = 1;
@@ -46,7 +46,9 @@ document.addEventListener("keydown", function (event) {
     rightCar.style.animation = "toRight 0.2s ease-in-out 0s forwards";
     rightPos = 0;
   }
-});
+}
+
+document.addEventListener("keydown", onKeyDown);
 
 function generateObstacle() {
   let obstacle = document.createElement("div");
@@ -99,8 +101,9 @@ function isInViewport(element) {
 // for experiment
 function restart() {
   player.start = false;
-  
+
   setTimeout(function () {
+    document.addEventListener("keydown", onKeyDown);
     startScreen.classList.remove("hide");
     let obstacles = document.querySelectorAll(".obstacle");
     obstacles.forEach((obs) => {
@@ -110,47 +113,60 @@ function restart() {
   }, 2000);
 }
 
-function gamePlay() {
-  if (player.start) {
-    player.score++;
-    currScore.textContent = player.score;
-    // console.log(player.score);
-    if (highScore < player.score) {
-      highScore = player.score;
-      currHighScore.textContent = highScore;
-    }
-    let obstacles = document.querySelectorAll(".obstacle");
-    obstacles.forEach(function (obstacle) {
-      obstacle.style.top = parseFloat(obstacle.style.top) + player.speed + "px";
-      let leftCol = isCollide(leftCar, obstacle);
-      let rightCol = isCollide(rightCar, obstacle);
-      let col = leftCol || rightCol;
-      if (col && obstacle.classList.contains("square")) {
-        obstacle.classList.add("collisionSpin");
-        // setTimeout(restart, 500);
-        restart();
-      } else if (col && obstacle.classList.contains("circle")) {
-        obstacle.parentNode.removeChild(obstacle);
+// const FPS = 10000000;
+// let lastTimestamp = 0;
+
+function gamePlay(timestamp) {
+  if (!player.start) return;
+
+  // if (timestamp - lastTimestamp < 1000 / FPS) return;
+  player.score++;
+  // currScore.textContent = player.score;
+  // console.log(player.score);
+  // if (highScore < player.score) {
+  //   highScore = player.score;
+  //   currHighScore.textContent = highScore;
+  // }
+  let obstacles = document.querySelectorAll(".obstacle");
+  obstacles.forEach(function (obstacle) {
+    obstacle.style.top = parseFloat(obstacle.style.top) + player.speed + "px";
+    let leftCol = isCollide(leftCar, obstacle);
+    let rightCol = isCollide(rightCar, obstacle);
+    let col = leftCol || rightCol;
+    if (col && obstacle.classList.contains("square")) {
+      obstacle.classList.add("collisionSpin");
+      document.removeEventListener("keydown", onKeyDown);
+      // setTimeout(restart, 500);
+      restart();
+    } else if (col && obstacle.classList.contains("circle")) {
+      player.coinsCollected++;
+      currScore.textContent = player.coinsCollected;
+      if (highScore < player.coinsCollected) {
+        highScore = player.coinsCollected;
+        currHighScore.textContent = highScore;
       }
-      if (!isInViewport(obstacle) && obstacle.classList.contains("square")) {
-        obstacle.parentNode.removeChild(obstacle);
-      } else if (
-        !isInViewport(obstacle) &&
-        obstacle.classList.contains("circle")
-      ) {
-        obstacle.classList.add("collisionBlink");
-        restart();
-      }
-      // player.start = false;
-    });
-    window.requestAnimationFrame(gamePlay);
-    if (player.score % sp == 0) {
-      addObstacle();
+      obstacle.parentNode.removeChild(obstacle);
     }
-    // if (player.score % 1000 == 0 && sp != 50) {
-    //   sp -= 10;
-    // }
+    if (!isInViewport(obstacle) && obstacle.classList.contains("square")) {
+      obstacle.parentNode.removeChild(obstacle);
+    } else if (
+      !isInViewport(obstacle) &&
+      obstacle.classList.contains("circle")
+    ) {
+      obstacle.classList.add("collisionBlink");
+      document.removeEventListener("keydown", onKeyDown);
+      restart();
+    }
+    // player.start = false;
+  });
+  if (player.score % sp == 0) {
+    addObstacle();
   }
+  window.requestAnimationFrame(gamePlay);
+  // lastTimestamp = timestamp;
+  // if (player.score % 1000 == 0 && sp != 50) {
+  //   sp -= 10;
+  // }
 }
 
 // save HS to device, animation blast, see color scheme

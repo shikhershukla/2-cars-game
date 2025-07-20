@@ -3,41 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!--insert favicon-->
+    <link rel="icon" href="./car.svg" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>2 Cars Game</title>
   </head>
   <body>
     <div class="startScreen">
-        <p>Click on the screen to start the game.</p>
+        <h1>2 CARS</h1>
+        <p>Click, Enter, or Space to Start</p>
         <br>
         <h4>Controls</h4>
-        <p>The left arrow key is used to control the left car.</p>
-        <p>The right arrow key is used to control the right car.</p>
+        <p>Left & Right Arrow Keys</p>
         <br>
         <h4>Rules</h4>
-        <p>Never overlook a single penny.</p>
-        <p>Avoid crashing into hazards.</p>
+        <p>Collect Coins, Avoid Obstacles</p>
+    </div>
+    <div class="gameOverScreen hide">
+        <h2>Game Over</h2>
+        <p>Your Score: <span class="finalScore">0</span></p>
+        <button class="playAgainBtn">Play Again</button>
     </div>
     <div class="scoreCard">
-        <p>SCORE</p>
+        <img src="./coin.svg" alt="Score">
         <p class="currScore">00</p>
     </div>
     <div class="highScoreCard">
-        <p> H S </p>
+        <img src="./trophy.svg" alt="High Score">
         <p class="currHighScore">00</p>
     </div>
     <div class="container">
         <div class="road left">
-            <div class="left-left path"></div>
-            <div class="left-right path"></div>
-            <div class="left-car car"><img src="./car_img.png" alt=""></div>
+            <div class="line"></div>
+            <div class="left-car car"><img src="./car.svg" alt=""></div>
         </div>
         <div class="road right">
-            <div class="right-left path"></div>
-            <div class="right-right path"></div>
-            <div class="right-car car"><img src="./car_img.png" alt=""></div>
+            <div class="line"></div>
+            <div class="right-car car"><img src="./car.svg" alt=""></div>
         </div>
     </div>
     <script async src="script.js"></script>

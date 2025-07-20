@@ -18,10 +18,10 @@ class Game {
             start: false,
             score: 0,
             speed: 5,
-            shieldActive: false,
-            speedBoostActive: false,
-            coinMagnetActive: false,
-            powerUpDuration: 5000, // 5 seconds
+            // shieldActive: false,
+            // speedBoostActive: false,
+            // coinMagnetActive: false,
+            // powerUpDuration: 5000, // 5 seconds
         };
         this.highScore = 0;
         this.obstacleSpawnRate = 70;
@@ -119,15 +119,15 @@ class Game {
         if (obstacleType < 0.4) { // 40% chance for coin
             isCoin = true;
         } else if (obstacleType < 0.6) { // 20% chance for power-up
-            isPowerUp = true;
-            const powerUpRandom = Math.random();
-            if (powerUpRandom < 0.33) {
-                powerUpType = 'shield';
-            } else if (powerUpRandom < 0.66) {
-                powerUpType = 'speedBoost';
-            } else {
-                powerUpType = 'coinMagnet';
-            }
+            // isPowerUp = true;
+            // const powerUpRandom = Math.random();
+            // if (powerUpRandom < 0.33) {
+            //     powerUpType = 'shield';
+            // } else if (powerUpRandom < 0.66) {
+            //     powerUpType = 'speedBoost';
+            // } else {
+            //     powerUpType = 'coinMagnet';
+            // }
         } else if (obstacleType < 0.7) { // 10% chance for large obstacle
             obstacle = new Obstacle(false, null, this.roadWidth, this.player.speed, false, null, 'large');
             this.obstacles.push(obstacle);
@@ -166,6 +166,7 @@ class Game {
     }
 
     activatePowerUp(type) {
+        /*
         switch (type) {
             case 'shield':
                 this.player.shieldActive = true;
@@ -194,6 +195,7 @@ class Game {
                 }, this.player.powerUpDuration);
                 break;
         }
+        */
     }
 
     gamePlay(timestamp) {
@@ -206,6 +208,7 @@ class Game {
             obstacle.update(deltaTime, this.player.speed);
 
             // Coin magnet effect
+            /*
             if (this.player.coinMagnetActive && obstacle.isCoin) {
                 const car = obstacle.road === 'left' ? this.leftCar : this.rightCar;
                 const carRect = car.getBoundingClientRect();
@@ -229,6 +232,7 @@ class Game {
                     return; // Skip further processing for this obstacle
                 }
             }
+            */
 
             const leftCollision = this.isCollide(this.leftCar, obstacle.element);
             const rightCollision = this.isCollide(this.rightCar, obstacle.element);
@@ -245,18 +249,18 @@ class Game {
                     obstacle.element.remove();
                     this.obstacles.splice(index, 1);
                 } else if (obstacle.isPowerUp) {
-                    this.playSound(this.coinSound); // Use coin sound for power-up collection for now
-                    this.activatePowerUp(obstacle.powerUpType);
-                    obstacle.element.remove();
-                    this.obstacles.splice(index, 1);
+                    // this.playSound(this.coinSound); // Use coin sound for power-up collection for now
+                    // this.activatePowerUp(obstacle.powerUpType);
+                    // obstacle.element.remove();
+                    // this.obstacles.splice(index, 1);
                 } else {
-                    if (this.player.shieldActive) {
-                        obstacle.element.remove();
-                        this.obstacles.splice(index, 1);
-                        this.player.shieldActive = false; // Shield used up
-                    } else {
+                    // if (this.player.shieldActive) {
+                    //     obstacle.element.remove();
+                    //     this.obstacles.splice(index, 1);
+                    //     this.player.shieldActive = false; // Shield used up
+                    // } else {
                         this.gameOver(leftCollision ? this.leftCar : this.rightCar);
-                    }
+                    // }
                 }
             }
 
@@ -309,8 +313,8 @@ class Obstacle {
             this.element.classList.add("circle");
             img.src = "./coin.svg";
         } else if (isPowerUp) {
-            this.element.classList.add("power-up");
-            img.src = `./${powerUpType}.svg`;
+            // this.element.classList.add("power-up");
+            // img.src = `./${powerUpType}.svg`;
         } else {
             this.element.classList.add("square");
             img.src = "./obstacle.svg";

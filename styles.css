@@ -7,159 +7,322 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  font-size: 62.5%;
-  background-color: #121212;
-  color: #FFFFFF;
+:root {
+  /* Vibrant Sunset Color Palette */
+  --bg-color: #0f0c29;
+  --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  --accent-primary: #ff4b2b;
+  --accent-secondary: #ff416c;
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --road-color: rgba(0, 0, 0, 0.4);
+  --road-border: rgba(255, 65, 108, 0.3);
+  --neon-glow: 0 0 10px rgba(255, 65, 108, 0.5), 0 0 20px rgba(255, 65, 108, 0.3);
 }
 
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 62.5%; /* 1rem = 10px */
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  overflow: hidden;
+}
+
+/* --- Glassmorphism UI Panels --- */
 .startScreen, .gameOverScreen {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  z-index: 1;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2rem;
-  width: 80vw;
-  max-width: 600px;
-  padding: 2rem;
-  border-radius: 1rem;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  z-index: 10;
+  width: 90vw;
+  max-width: 500px;
+  padding: 4rem 3rem;
+  border-radius: 2rem;
+  
+  /* Glass effect */
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), inset 0 0 20px rgba(255, 255, 255, 0.02);
+  
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
+  
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.playAgainBtn {
-    background-color: #FFC107;
-    color: #121212;
-    padding: 1rem 2rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-size: 1.5rem;
-    margin-top: 1rem;
-    border: none;
-}
-
-.startScreen h1 {
-    font-size: 5rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5rem;
-}
-
-.startScreen h4 {
-    font-size: 2.5rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-}
-
-.scoreCard, .highScoreCard {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  font-size: 2.5rem;
-  font-weight: 600;
-  z-index: 2;
-  background-color: rgba(0,0,0,0.5);
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
-}
-
-.scoreCard img, .highScoreCard img {
-    width: 30px;
-    height: 30px;
-    margin-right: 1rem;
-}
-
-.scoreCard {
-  top: 2rem;
-  left: 2rem;
-}
-
-.highScoreCard {
-  top: 2rem;
-  right: 2rem;
-}
-
-.container {
-  width: 100vw;
-  height: 100vh;
-  background-color: #121212;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.road {
-  background-color: #212121;
-  width: 25%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  border-left: 2px dashed #333;
-  border-right: 2px dashed #333;
-}
-
-.line {
-  position: absolute;
-  width: 10px;
-  height: 50px;
-  background-color: #444;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: moveLine 2s linear infinite;
-}
-
-@keyframes moveLine {
-  0% {
-    top: -100px;
-  }
-  100% {
-    top: 100vh;
-  }
-}
-
-.car {
-  position: absolute;
-  height: 6rem;
-  width: 3rem;
-  bottom: 10%;
-  left: 25%;
-  transform: translate(-50%, 0);
-  transition: left 0.2s ease-in-out;
-}
-
-.car img {
-  height: 6rem;
-  width: 3rem;
-}
-
-.right-car {
-  left: 75%;
+/* Active state for panels */
+.startScreen:not(.hide), .gameOverScreen:not(.hide) {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .hide {
-  display: none;
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
 }
 
+/* --- Typography --- */
+.startScreen h1 {
+  font-size: 5.5rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8rem;
+  background: linear-gradient(to right, var(--accent-secondary), var(--accent-primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
+  font-weight: 800;
+}
+
+.startScreen p {
+  font-size: 1.6rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.startScreen h4, .gameOverScreen h2 {
+  font-size: 2.2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  color: var(--text-main);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.gameOverScreen h2 {
+  font-size: 4rem;
+  color: var(--accent-secondary);
+  text-shadow: var(--neon-glow);
+  margin-bottom: 2rem;
+}
+
+.gameOverScreen p {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+.finalScore {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+}
+
+/* --- Buttons --- */
+.playAgainBtn {
+  background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+  color: #fff;
+  padding: 1.2rem 3rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  border: none;
+  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.playAgainBtn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(255, 65, 108, 0.6);
+}
+
+.playAgainBtn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* --- Score Cards --- */
+.scoreCard, .highScoreCard {
+  position: absolute;
+  top: 2rem;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: 600;
+  
+  /* Glass effect */
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 5rem;
+  padding: 0.8rem 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  
+  transition: transform 0.3s ease;
+}
+
+.scoreCard:hover, .highScoreCard:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.scoreCard { left: 2rem; }
+.highScoreCard { right: 2rem; }
+
+.scoreCard img, .highScoreCard img {
+  width: 28px;
+  height: 28px;
+  margin-right: 1.2rem;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}
+
+.currScore, .currHighScore {
+  min-width: 4rem;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* --- Game Container & Layout --- */
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px; /* For 3D transforms if needed later */
+}
+
+/* Screen shake effect on crash */
+.container.shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* --- Roads --- */
+.road {
+  background: var(--road-color);
+  backdrop-filter: blur(5px);
+  width: 25%;
+  max-width: 300px;
+  min-width: 150px;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  border-left: 2px solid var(--road-border);
+  border-right: 2px solid var(--road-border);
+  box-shadow: inset 0 0 50px rgba(0,0,0,0.5), 0 0 20px rgba(255, 65, 108, 0.1);
+}
+
+.road::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Neon Center Lines */
+.line {
+  position: absolute;
+  width: 4px;
+  height: 80px;
+  background: #fff;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  box-shadow: 0 0 10px #fff, 0 0 20px var(--accent-secondary);
+  animation: moveLine 1.5s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes moveLine {
+  0% { top: -100px; opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { top: 100vh; opacity: 0; }
+}
+
+/* --- Cars --- */
+.car {
+  position: absolute;
+  height: 7rem;
+  width: 3.5rem;
+  bottom: 12%;
+  left: 25%;
+  transform: translateX(-50%);
+  transition: left 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy transition */
+  z-index: 2;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+.car img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.right-car { left: 75%; }
+
+/* Crash Animation */
+.crash {
+  animation: crashAnim 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes crashAnim {
+  0% { transform: translateX(-50%) scale(1) rotate(0deg); filter: brightness(1); }
+  20% { transform: translateX(-50%) scale(1.3) rotate(-15deg); filter: brightness(1.5); }
+  50% { transform: translateX(-50%) scale(0.8) rotate(25deg); filter: brightness(0.5); }
+  100% { transform: translateX(-50%) scale(0) rotate(-45deg); opacity: 0; }
+}
+
+/* --- Obstacles & Coins --- */
 .obstacle {
   width: 50px;
   height: 70px;
   position: absolute;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.obstacle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
+}
+
+/* Coin specific styles */
 .circle img {
-  animation: coinSpin 1.5s linear infinite;
+  animation: coinHover 2s ease-in-out infinite, coinSpin 3s linear infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
 }
 
+/* Obstacle specific styles */
 .square img {
-  animation: obstacleSpin 5s linear infinite;
+  animation: obstacleHover 1.5s ease-in-out infinite alternative;
+  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4));
+}
+
+.large-obstacle img {
+  filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.6));
 }
 
 @keyframes coinSpin {
@@ -167,17 +330,27 @@ body {
   100% { transform: rotateY(360deg); }
 }
 
-@keyframes obstacleSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes coinHover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-.crash {
-    animation: crash 0.5s forwards;
+@keyframes obstacleHover {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.05); }
 }
 
-@keyframes crash {
-    0% { transform: scale(1) rotate(0deg); opacity: 1; }
-    50% { transform: scale(1.2) rotate(15deg); }
-    100% { transform: scale(0) rotate(0deg); opacity: 0; }
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .road { width: 40%; max-width: none; }
+  .startScreen h1 { font-size: 4rem; letter-spacing: 0.4rem; }
+  .scoreCard, .highScoreCard { font-size: 1.8rem; padding: 0.6rem 1.5rem; }
+  .car { height: 6rem; width: 3rem; }
+}
+
+@media (max-width: 480px) {
+  .road { width: 50%; }
+  .startScreen h1 { font-size: 3rem; letter-spacing: 0.2rem; }
+  .startScreen p { font-size: 1.4rem; }
+  .startScreen h4 { font-size: 1.8rem; }
 }

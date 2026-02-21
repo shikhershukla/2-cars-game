@@ -163,6 +163,13 @@ class Game {
         this.finalScoreElement.textContent = this.player.score;
         crashedCar.classList.add("crash");
         this.playSound(this.crashSound);
+        
+        // Add screen shake effect
+        this.container.classList.add("shake");
+        // Remove the shake class after animation completes (0.5s match CSS)
+        setTimeout(() => {
+            this.container.classList.remove("shake");
+        }, 500);
     }
 
     activatePowerUp(type) {

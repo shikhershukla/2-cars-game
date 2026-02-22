@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500">
+  <rect width="1000" height="500" fill="transparent" />
+  <!-- Stars -->
+  <circle cx="100" cy="50" r="1" fill="#fff" opacity="0.8"/>
+  <circle cx="300" cy="150" r="1.5" fill="#fff" opacity="0.5"/>
+  <circle cx="500" cy="80" r="1" fill="#fff" opacity="0.3"/>
+  <circle cx="700" cy="200" r="2" fill="#fff" opacity="0.7"/>
+  <circle cx="900" cy="120" r="1" fill="#fff" opacity="0.4"/>
+  <circle cx="200" cy="300" r="1.5" fill="#fff" opacity="0.6"/>
+  <circle cx="400" cy="400" r="1" fill="#fff" opacity="0.2"/>
+  <circle cx="600" cy="350" r="2" fill="#fff" opacity="0.9"/>
+  <circle cx="800" cy="450" r="1" fill="#fff" opacity="0.5"/>
+  <circle cx="950" cy="300" r="1.5" fill="#fff" opacity="0.8"/>
+  <!-- Distant Nebulas / Glowing clouds -->
+  <ellipse cx="250" cy="100" rx="150" ry="50" fill="#ff416c" opacity="0.1" filter="blur(20px)" />
+  <ellipse cx="750" cy="300" rx="200" ry="80" fill="#302b63" opacity="0.15" filter="blur(30px)" />
+</svg>

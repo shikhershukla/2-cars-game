@@ -25,6 +25,7 @@
   --accent-shadow-hover: rgba(255, 65, 108, 0.6);
   --accent-border-active: rgba(255, 65, 108, 0.5);
   --title-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
+  --bg-image: url('../assets/images/bg_neon.svg');
 }
 
 [data-theme="synth"] {
@@ -39,6 +40,7 @@
   --accent-shadow-hover: rgba(0, 240, 255, 0.6);
   --accent-border-active: rgba(255, 0, 255, 0.5);
   --title-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+  --bg-image: url('../assets/images/bg_synth.svg');
 }
 
 [data-theme="cyber"] {
@@ -53,6 +55,7 @@
   --accent-shadow-hover: rgba(252, 238, 10, 0.6);
   --accent-border-active: rgba(0, 255, 65, 0.5);
   --title-shadow: 0 0 20px rgba(252, 238, 10, 0.3);
+  --bg-image: url('../assets/images/bg_cyber.svg');
 }
 
 body {
@@ -62,6 +65,26 @@ body {
   background-attachment: fixed;
   color: var(--text-main);
   overflow: hidden;
+}
+
+/* --- Scrolling Background --- */
+.scrolling-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-image: var(--bg-image);
+  background-size: 1000px 100%;
+  background-repeat: repeat-x;
+  animation: scrollBg 20s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes scrollBg {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 0; }
 }
 
 /* --- Glassmorphism UI Panels --- */

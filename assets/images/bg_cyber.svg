@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500">
+  <rect width="1000" height="500" fill="transparent" />
+  <!-- Distant Skyline Layer 1 (Dark) -->
+  <path d="M0,500 L0,300 L50,300 L50,200 L120,200 L120,350 L180,350 L180,250 L250,250 L250,150 L320,150 L320,400 L400,400 L400,280 L480,280 L480,220 L550,220 L550,320 L620,320 L620,200 L700,200 L700,380 L780,380 L780,250 L850,250 L850,180 L920,180 L920,300 L1000,300 L1000,500 Z" fill="#000" opacity="0.8"/>
+  <!-- Occasional Lit Windows -->
+  <rect x="60" y="220" width="4" height="4" fill="#fcee0a" opacity="0.5"/>
+  <rect x="80" y="240" width="4" height="4" fill="#fcee0a" opacity="0.5"/>
+  <rect x="100" y="280" width="4" height="4" fill="#fcee0a" opacity="0.5"/>
+  <rect x="270" y="200" width="4" height="4" fill="#00ff41" opacity="0.5"/>
+  <rect x="290" y="220" width="4" height="4" fill="#00ff41" opacity="0.5"/>
+  <rect x="300" y="300" width="4" height="4" fill="#00ff41" opacity="0.5"/>
+  <rect x="500" y="250" width="4" height="4" fill="#fcee0a" opacity="0.5"/>
+  <rect x="520" y="260" width="4" height="4" fill="#fcee0a" opacity="0.5"/>
+  <rect x="650" y="230" width="4" height="4" fill="#00ff41" opacity="0.5"/>
+  <rect x="670" y="280" width="4" height="4" fill="#00ff41" opacity="0.5"/>
+  <rect x="870" y="200" width="4" height="4" fill="#fcee0a" opacity="0.5"/>
+  <rect x="890" y="240" width="4" height="4" fill="#fcee0a" opacity="0.5"/>
+</svg>

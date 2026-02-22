@@ -15,6 +15,11 @@
     <div class="startScreen">
         <h1>2 CARS</h1>
         <p>Click, Enter, or Space to Start</p>
+        <div class="difficultySelector">
+          <button class="diffBtn" data-diff="easy">Easy</button>
+          <button class="diffBtn active" data-diff="medium">Medium</button>
+          <button class="diffBtn" data-diff="hard">Hard</button>
+        </div>
         <br>
         <h4>Controls</h4>
         <p>Left & Right Arrow Keys</p>
@@ -25,7 +30,10 @@
     <div class="gameOverScreen hide">
         <h2>Game Over</h2>
         <p>Your Score: <span class="finalScore">0</span></p>
-        <button class="playAgainBtn">Play Again</button>
+        <div class="actionButtons">
+            <button class="playAgainBtn">Play Again</button>
+            <button class="homeBtn">Home Screen</button>
+        </div>
     </div>
     <div class="scoreCard">
         <img src="./coin.svg" alt="Score">

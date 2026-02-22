@@ -8,11 +8,15 @@ class Game {
         this.gameOverScreen = document.querySelector(".gameOverScreen");
         this.finalScoreElement = document.querySelector(".finalScore");
         this.playAgainBtn = document.querySelector(".playAgainBtn");
+        this.homeBtn = document.querySelector(".homeBtn");
         this.container = document.querySelector(".container");
         this.leftRoad = document.querySelector(".left");
         this.rightRoad = document.querySelector(".right");
         this.scoreElement = document.querySelector(".currScore");
         this.highScoreElement = document.querySelector(".currHighScore");
+        this.diffBtns = document.querySelectorAll(".diffBtn");
+
+        this.difficulty = 'medium'; // default
 
         this.player = {
             start: false,
@@ -32,9 +36,25 @@ class Game {
 
         this.obstacles = [];
 
-        document.addEventListener("click", this.startGame.bind(this));
+        document.addEventListener("click", this.handleDocumentClick.bind(this));
         document.addEventListener("keydown", this.handleKeyPress.bind(this));
         this.playAgainBtn.addEventListener("click", this.startGame.bind(this));
+        this.homeBtn.addEventListener("click", this.showHomeScreen.bind(this));
+
+        // Difficulty selector logic
+        this.diffBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                // Prevent bubbling to document which would start game immediately
+                e.stopPropagation();
+                
+                // Remove active from all
+                this.diffBtns.forEach(b => b.classList.remove("active"));
+                // Add active to clicked
+                btn.classList.add("active");
+                // Set difficulty
+                this.difficulty = btn.getAttribute("data-diff");
+            });
+        });
 
         this.minObstacleGap = 300; // Minimum vertical pixel gap between obstacles
 
@@ -57,6 +77,23 @@ class Game {
         }
     }
 
+    handleDocumentClick(e) {
+        // Only start game if user didn't click on an interactive element like difficulty buttons, play again, or home buttons
+        if (!e.target.closest('.diffBtn') && !e.target.closest('.playAgainBtn') && !e.target.closest('.homeBtn')) {
+            this.startGame();
+        }
+    }
+
+    showHomeScreen() {
+        this.gameOverScreen.classList.add("hide");
+        this.startScreen.classList.remove("hide");
+        this.scoreElement.textContent = "00";
+        this.obstacles.forEach(obstacle => obstacle.element.remove());
+        this.obstacles = [];
+        this.leftCar.classList.remove("crash");
+        this.rightCar.classList.remove("crash");
+    }
+
     startGame() {
         if (this.player.start) return;
 
@@ -65,6 +102,20 @@ class Game {
         this.player.start = true;
         this.player.score = 0;
         this.scoreElement.textContent = 0;
+        
+        // Apply initial configurations based on difficulty
+        if (this.difficulty === 'easy') {
+            this.player.speed = 4;
+            this.obstacleSpawnRate = 90;
+        } else if (this.difficulty === 'hard') {
+            this.player.speed = 7;
+            this.obstacleSpawnRate = 50;
+        } else {
+            // Medium (default)
+            this.player.speed = 5;
+            this.obstacleSpawnRate = 70;
+        }
+
         this.obstacles.forEach(obstacle => obstacle.element.remove());
         this.obstacles = [];
         this.leftCar.classList.remove("crash");
@@ -271,8 +322,11 @@ class Game {
         });
 
         // Increase difficulty based on score
-        this.player.speed = 5 + Math.floor(this.player.score / 10); // Increase speed every 10 points
-        this.obstacleSpawnRate = 70 - Math.floor(this.player.score / 5); // Decrease spawn rate every 5 points
+        const baseSpeed = this.difficulty === 'easy' ? 4 : (this.difficulty === 'hard' ? 7 : 5);
+        const baseSpawnRate = this.difficulty === 'easy' ? 90 : (this.difficulty === 'hard' ? 50 : 70);
+
+        this.player.speed = baseSpeed + Math.floor(this.player.score / 10); // Increase speed every 10 points
+        this.obstacleSpawnRate = baseSpawnRate - Math.floor(this.player.score / 5); // Decrease spawn rate every 5 points
         if (this.obstacleSpawnRate < 20) this.obstacleSpawnRate = 20; // Cap spawn rate
 
         if (!this.gameReady) {

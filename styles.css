@@ -148,6 +148,77 @@ body {
   transform: translateY(1px) scale(0.98);
 }
 
+.actionButtons {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.homeBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 1.2rem 3rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.homeBtn:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.homeBtn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* --- Difficulty Selector --- */
+.difficultySelector {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 3rem;
+  border: 1px solid var(--glass-border);
+}
+
+.diffBtn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  padding: 0.8rem 2rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  transition: all 0.3s ease;
+}
+
+.diffBtn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.diffBtn.active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+  border-color: rgba(255, 65, 108, 0.5);
+}
+
 /* --- Score Cards --- */
 .scoreCard, .highScoreCard {
   position: absolute;

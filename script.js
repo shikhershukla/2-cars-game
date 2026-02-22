@@ -110,37 +110,26 @@ class Game {
     }
 
     addObstacle() {
-        const obstacleType = Math.random();
+        const obstacleTypeRand = Math.random();
         let isCoin = false;
         let isPowerUp = false;
         let powerUpType = null;
-        let obstacle;
+        let obsType = 'normal';
 
-        if (obstacleType < 0.4) { // 40% chance for coin
+        if (obstacleTypeRand < 0.4) { // 40% chance for coin
             isCoin = true;
-        } else if (obstacleType < 0.6) { // 20% chance for power-up
+        } else if (obstacleTypeRand < 0.6) { // 20% chance for power-up
             // isPowerUp = true;
-            // const powerUpRandom = Math.random();
-            // if (powerUpRandom < 0.33) {
-            //     powerUpType = 'shield';
-            // } else if (powerUpRandom < 0.66) {
-            //     powerUpType = 'speedBoost';
-            // } else {
-            //     powerUpType = 'coinMagnet';
-            // }
-        } else if (obstacleType < 0.7) { // 10% chance for large obstacle
-            obstacle = new Obstacle(false, null, this.roadWidth, this.player.speed, false, null, 'large');
-            this.obstacles.push(obstacle);
-            this.container.appendChild(obstacle.element);
-            return; // Done with large obstacle
+        } else if (obstacleTypeRand < 0.7) { // 10% chance for large obstacle
+            obsType = 'large';
         }
 
-        // For normal obstacles
-        const position = Math.random() < 0.5 ? 0 : 1; // 0 for left, 1 for right
+        // All obstacles should spawn in a designated lane, no exceptions
+        const position = Math.random() < 0.5 ? 0 : 1; // 0 for left lane, 1 for right lane
         const targetRoad = Math.random() < 0.5 ? this.leftRoad : this.rightRoad;
 
-        obstacle = new Obstacle(isCoin, position, this.roadWidth, this.player.speed, isPowerUp, powerUpType);
-        obstacle.road = targetRoad === this.leftRoad ? 'left' : 'right'; // Store the road
+        let obstacle = new Obstacle(isCoin, position, this.roadWidth, this.player.speed, isPowerUp, powerUpType, obsType);
+        obstacle.road = targetRoad === this.leftRoad ? 'left' : 'right'; 
 
         this.obstacles.push(obstacle);
         targetRoad.appendChild(obstacle.element);
@@ -327,26 +316,26 @@ class Obstacle {
             img.src = "./obstacle.svg";
         }
 
-        let obstacleWidth = 70;
+        let obstacleWidth = 50;
         if (this.obstacleType === 'large') {
             this.element.classList.add('large-obstacle');
-            obstacleWidth = 150;
+            // Make it chunkier but still spawn distinctly in a lane
+            obstacleWidth = this.roadWidth * 0.35; 
             img.src = "./obstacle.svg";
         }
 
+        // Apply width to BOTH the wrapper (for collision) and the image (for visuals)
+        this.element.style.width = obstacleWidth + "px";
         img.style.width = obstacleWidth + "px";
         img.style.height = "70px";
         this.element.appendChild(img);
 
-        if (this.obstacleType === 'large') {
-            // Center large obstacles in the container (2 roads)
-            this.element.style.left = this.roadWidth - (obstacleWidth / 2) + "px";
-        } else if (position === 0) {
+        if (position === 0) {
             // Left lane
-            this.element.style.left = this.roadWidth / 6 + "px";
+            this.element.style.left = "25%";
         } else if (position === 1) {
             // Right lane
-            this.element.style.left = (4 * this.roadWidth) / 6 + "px";
+            this.element.style.left = "75%";
         }
     }
 

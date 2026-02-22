@@ -61,9 +61,9 @@ class Game {
         this.lastObstacleTimestamp = 0;
 
         // Sound effects
-        this.coinSound = new Audio('coin.mp3');
-        this.carMoveSound = new Audio('car_move.mp3');
-        this.crashSound = new Audio('crash.mp3');
+        this.coinSound = new Audio('assets/audio/coin.mp3');
+        this.carMoveSound = new Audio('assets/audio/car_move.mp3');
+        this.crashSound = new Audio('assets/audio/crash.mp3');
     }
 
     async playSound(sound) {
@@ -361,13 +361,13 @@ class Obstacle {
         const img = document.createElement("img");
         if (isCoin) {
             this.element.classList.add("circle");
-            img.src = "./coin.svg";
+            img.src = "assets/images/coin.svg";
         } else if (isPowerUp) {
             // this.element.classList.add("power-up");
-            // img.src = `./${powerUpType}.svg`;
+            // img.src = `assets/images/${powerUpType}.svg`;
         } else {
             this.element.classList.add("square");
-            img.src = "./obstacle.svg";
+            img.src = "assets/images/obstacle.svg";
         }
 
         let obstacleWidth = 50;
@@ -375,7 +375,7 @@ class Obstacle {
             this.element.classList.add('large-obstacle');
             // Make it chunkier but still spawn distinctly in a lane
             obstacleWidth = this.roadWidth * 0.35; 
-            img.src = "./obstacle.svg";
+            img.src = "assets/images/obstacle.svg";
         }
 
         // Apply width to BOTH the wrapper (for collision) and the image (for visuals)

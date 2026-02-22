@@ -8,7 +8,7 @@
 }
 
 :root {
-  /* Vibrant Sunset Color Palette */
+  /* Vibrant Sunset Color Palette (Neon Default) */
   --bg-color: #0f0c29;
   --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
   --accent-primary: #ff4b2b;
@@ -21,6 +21,38 @@
   --road-color: rgba(0, 0, 0, 0.4);
   --road-border: rgba(255, 65, 108, 0.3);
   --neon-glow: 0 0 10px rgba(255, 65, 108, 0.5), 0 0 20px rgba(255, 65, 108, 0.3);
+  --accent-shadow-base: rgba(255, 65, 108, 0.4);
+  --accent-shadow-hover: rgba(255, 65, 108, 0.6);
+  --accent-border-active: rgba(255, 65, 108, 0.5);
+  --title-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
+}
+
+[data-theme="synth"] {
+  --bg-color: #0d0221;
+  --bg-gradient: linear-gradient(135deg, #0d0221 0%, #261447 50%, #2f0147 100%);
+  --accent-primary: #00f0ff;
+  --accent-secondary: #ff00ff;
+  --road-color: rgba(13, 2, 33, 0.6);
+  --road-border: rgba(0, 240, 255, 0.5);
+  --neon-glow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(255, 0, 255, 0.5);
+  --accent-shadow-base: rgba(0, 240, 255, 0.4);
+  --accent-shadow-hover: rgba(0, 240, 255, 0.6);
+  --accent-border-active: rgba(255, 0, 255, 0.5);
+  --title-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+[data-theme="cyber"] {
+  --bg-color: #0b0c10;
+  --bg-gradient: linear-gradient(135deg, #0b0c10 0%, #1f2833 50%, #000000 100%);
+  --accent-primary: #fcee0a;
+  --accent-secondary: #00ff41;
+  --road-color: rgba(0, 0, 0, 0.8);
+  --road-border: rgba(252, 238, 10, 0.5);
+  --neon-glow: 0 0 10px rgba(252, 238, 10, 0.5), 0 0 20px rgba(0, 255, 65, 0.5);
+  --accent-shadow-base: rgba(252, 238, 10, 0.4);
+  --accent-shadow-hover: rgba(252, 238, 10, 0.6);
+  --accent-border-active: rgba(0, 255, 65, 0.5);
+  --title-shadow: 0 0 20px rgba(252, 238, 10, 0.3);
 }
 
 body {
@@ -83,7 +115,7 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(255, 75, 43, 0.3);
+  text-shadow: var(--title-shadow);
   font-weight: 800;
 }
 
@@ -134,14 +166,14 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   border: none;
-  box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+  box-shadow: 0 6px 20px var(--accent-shadow-base);
   transition: all 0.3s ease;
   font-family: 'Poppins', sans-serif;
 }
 
 .playAgainBtn:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 10px 25px rgba(255, 65, 108, 0.6);
+  box-shadow: 0 10px 25px var(--accent-shadow-hover);
 }
 
 .playAgainBtn:active {
@@ -181,8 +213,8 @@ body {
   transform: translateY(1px) scale(0.98);
 }
 
-/* --- Difficulty Selector --- */
-.difficultySelector {
+/* --- Settings Selectors --- */
+.difficultySelector, .themeSelector {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
@@ -192,7 +224,7 @@ body {
   border: 1px solid var(--glass-border);
 }
 
-.diffBtn {
+.diffBtn, .themeBtn {
   background: transparent;
   color: var(--text-muted);
   border: 1px solid transparent;
@@ -207,16 +239,16 @@ body {
   transition: all 0.3s ease;
 }
 
-.diffBtn:hover {
+.diffBtn:hover, .themeBtn:hover {
   color: var(--text-main);
   background: rgba(255, 255, 255, 0.1);
 }
 
-.diffBtn.active {
+.diffBtn.active, .themeBtn.active {
   color: #fff;
   background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
-  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
-  border-color: rgba(255, 65, 108, 0.5);
+  box-shadow: 0 4px 15px var(--accent-shadow-base);
+  border-color: var(--accent-border-active);
 }
 
 /* --- Score Cards --- */

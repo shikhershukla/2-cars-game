@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
+  <!-- Wedge car -->
+  <path d="M4 18h16l-3-10H7L4 18z M6 16l2-6h8l2 6H6z" />
+  <rect x="5" y="18" width="3" height="3" />
+  <rect x="16" y="18" width="3" height="3" />
+</svg>

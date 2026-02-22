@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFF00">
+  <!-- Hexagon Data Chip -->
+  <path d="M7 2L2 12l5 10h10l5-10-5-10H7zm9 16H8L4.5 12 8 6h8l3.5 6L16 18z"/>
+  <rect x="10" y="8" width="4" height="8" />
+</svg>

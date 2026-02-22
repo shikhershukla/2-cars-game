@@ -15,8 +15,10 @@ class Game {
         this.scoreElement = document.querySelector(".currScore");
         this.highScoreElement = document.querySelector(".currHighScore");
         this.diffBtns = document.querySelectorAll(".diffBtn");
+        this.themeBtns = document.querySelectorAll(".themeBtn");
 
         this.difficulty = 'medium'; // default
+        this.theme = 'neon'; // default
 
         this.player = {
             start: false,
@@ -56,6 +58,18 @@ class Game {
             });
         });
 
+        // Theme selector logic
+        this.themeBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                
+                this.themeBtns.forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                
+                this.setTheme(btn.getAttribute("data-theme-val"));
+            });
+        });
+
         this.minObstacleGap = 300; // Minimum vertical pixel gap between obstacles
 
         this.lastObstacleTimestamp = 0;
@@ -78,10 +92,38 @@ class Game {
     }
 
     handleDocumentClick(e) {
-        // Only start game if user didn't click on an interactive element like difficulty buttons, play again, or home buttons
-        if (!e.target.closest('.diffBtn') && !e.target.closest('.playAgainBtn') && !e.target.closest('.homeBtn')) {
+        // Only start game if user didn't click on an interactive element like difficulty buttons, play again, theme buttons, or home buttons
+        if (!e.target.closest('.diffBtn') && !e.target.closest('.themeBtn') && !e.target.closest('.playAgainBtn') && !e.target.closest('.homeBtn')) {
             this.startGame();
         }
+    }
+
+    setTheme(newTheme) {
+        this.theme = newTheme;
+        document.body.setAttribute('data-theme', this.theme);
+        this.updateAssetPaths();
+    }
+
+    updateAssetPaths() {
+        const suffix = this.theme === 'neon' ? '' : '_' + this.theme;
+        const carSrc = `assets/images/car${suffix}.svg`;
+        const coinSrc = `assets/images/coin${suffix}.svg`;
+        const obstacleSrc = `assets/images/obstacle${suffix}.svg`;
+
+        // Update static UI elements
+        this.leftCar.querySelector("img").src = carSrc;
+        this.rightCar.querySelector("img").src = carSrc;
+        this.scoreElement.previousElementSibling.src = coinSrc;
+
+        // Update active obstacles in game
+        this.obstacles.forEach(obs => {
+            const img = obs.element.querySelector("img");
+            if (obs.isCoin) {
+                img.src = coinSrc;
+            } else {
+                img.src = obstacleSrc;
+            }
+        });
     }
 
     showHomeScreen() {
@@ -179,7 +221,7 @@ class Game {
         const position = Math.random() < 0.5 ? 0 : 1; // 0 for left lane, 1 for right lane
         const targetRoad = Math.random() < 0.5 ? this.leftRoad : this.rightRoad;
 
-        let obstacle = new Obstacle(isCoin, position, this.roadWidth, this.player.speed, isPowerUp, powerUpType, obsType);
+        let obstacle = new Obstacle(isCoin, position, this.roadWidth, this.player.speed, isPowerUp, powerUpType, obsType, this.theme);
         obstacle.road = targetRoad === this.leftRoad ? 'left' : 'right'; 
 
         this.obstacles.push(obstacle);
@@ -345,7 +387,7 @@ class Game {
 }
 
 class Obstacle {
-    constructor(isCoin, position, roadWidth, speed, isPowerUp = false, powerUpType = null, obstacleType = 'normal') {
+    constructor(isCoin, position, roadWidth, speed, isPowerUp = false, powerUpType = null, obstacleType = 'normal', theme = 'neon') {
         this.isCoin = isCoin;
         this.position = position;
         this.speed = speed;
@@ -358,16 +400,18 @@ class Obstacle {
         this.element.classList.add("obstacle");
         this.element.style.top = "0px";
 
+        const suffix = theme === 'neon' ? '' : '_' + theme;
+
         const img = document.createElement("img");
         if (isCoin) {
             this.element.classList.add("circle");
-            img.src = "assets/images/coin.svg";
+            img.src = `assets/images/coin${suffix}.svg`;
         } else if (isPowerUp) {
             // this.element.classList.add("power-up");
             // img.src = `assets/images/${powerUpType}.svg`;
         } else {
             this.element.classList.add("square");
-            img.src = "assets/images/obstacle.svg";
+            img.src = `assets/images/obstacle${suffix}.svg`;
         }
 
         let obstacleWidth = 50;
@@ -375,7 +419,7 @@ class Obstacle {
             this.element.classList.add('large-obstacle');
             // Make it chunkier but still spawn distinctly in a lane
             obstacleWidth = this.roadWidth * 0.35; 
-            img.src = "assets/images/obstacle.svg";
+            img.src = `assets/images/obstacle${suffix}.svg`;
         }
 
         // Apply width to BOTH the wrapper (for collision) and the image (for visuals)
